@@ -1,0 +1,43 @@
+/* Style pour le conteneur du footer */
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+/* Style pour le bouton d'ajout de tâche */
+#add-task-button {
+    background-color: cadetblue;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#add-task-button:hover {
+    background-color: #4fa8d3;
+    transform: translateY(-2px);
+}
+
+#add-task-button:active {
+    background-color: #3d8bb0;
+    transform: translateY(0);
+}
+
+/* Style pour l'icône */
+#add-task-button svg {
+    margin-left: 5px;
+}
