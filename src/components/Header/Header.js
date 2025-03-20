@@ -6,13 +6,9 @@ export default function Header({ taches }) {
 
     return (
         <div id="header">
-            <Title />
+            <h1 id="title">To Do List</h1>
             <p>Nombre de tâches: {numberOfTasks}</p>
             <p>Tâches en cours: {tasksNotDone}</p>
         </div>
     );
-}
-
-export function Title() {
-    return <h1 id="title">To Do List</h1>;
 }

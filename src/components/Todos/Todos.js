@@ -1,19 +1,50 @@
 import React from 'react';
 import './Todos.css';
 
-export default function Todos({ taches }) {
+export default function Todos({ taches, updateTask }) {
+    const handleTaskChange = (id, field, value) => {
+        const updatedTask = taches.find(task => task.id === id);
+        updatedTask[field] = value;
+        updateTask({ ...updatedTask });
+    };
+
     return (
         <div className="todos-container">
             <ul>
-                {taches.map((task, index) => (
-                    <li key={index} className="todo-item">
-                        <h3 className="todo-title">{task.title}</h3>
-                        <p className="todo-description">{task.description}</p>
-                        <p className="todo-date">📅 Créé le: {task.date_creation}</p>
-                        <p className="todo-deadline">⏳ À rendre avant: {task.date_echeance}</p>
-                        <p className={`todo-status ${task.done ? 'completed' : 'pending'}`}>✅ Statut: {task.done ? 'Terminé' : 'En attente'}</p>
-                        <p className={`todo-urgent ${task.urgent ? 'urgent' : ''}`}>⚠️ Urgent: {task.urgent ? 'Oui' : 'Non'}</p>
-                        <p className="todo-contacts">📞 Contacts: {task.contacts.join(', ')}</p>
+                {taches.map((task) => (
+                    <li key={task.id} className="todo-item">
+                        <input
+                            type="text"
+                            className="todo-title"
+                            value={task.title}
+                            onChange={(e) => handleTaskChange(task.id, 'title', e.target.value)}
+                        />
+                        <textarea
+                            className="todo-description"
+                            value={task.description}
+                            onChange={(e) => handleTaskChange(task.id, 'description', e.target.value)}
+                        />
+                        <input
+                            type="date"
+                            value={task.date_echeance}
+                            onChange={(e) => handleTaskChange(task.id, 'date_echeance', e.target.value)}
+                        />
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={task.done}
+                                onChange={(e) => handleTaskChange(task.id, 'done', e.target.checked)}
+                            />
+                            Terminée
+                        </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={task.urgent}
+                                onChange={(e) => handleTaskChange(task.id, 'urgent', e.target.checked)}
+                            />
+                            Urgent
+                        </label>
                     </li>
                 ))}
             </ul>

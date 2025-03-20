@@ -1,90 +1,89 @@
-* {
-    box-sizing: border-box;
-}
-
 body {
-    font-family: sans-serif;
-    margin: 20px;
-    padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
-h1 {
-    margin-top: 0;
-    font-size: 22px;
+.todos-container {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-h2 {
-    margin-top: 0;
-    font-size: 20px;
+.todo-item {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-h3 {
-    margin-top: 0;
-    font-size: 18px;
+.todo-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-h4 {
-    margin-top: 0;
-    font-size: 16px;
+.todo-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2c3e50;
+  border: none;
+  background: none;
+  padding: 5px;
 }
 
-h5 {
-    margin-top: 0;
-    font-size: 14px;
+.todo-description {
+  font-size: 16px;
+  color: #34495e;
+  border: none;
+  background: none;
+  padding: 5px;
 }
 
-h6 {
-    margin-top: 0;
-    font-size: 12px;
+.completed {
+  background-color: #2ecc71;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
 }
 
-code {
-    font-size: 1.2em;
+.pending {
+  background-color: lightcoral;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
 }
 
-ul {
-    padding-inline-start: 20px;
+.urgent {
+  font-weight: bold;
+  color: #e74c3c;
 }
 
-* {
-    box-sizing: border-box;
+.filter-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
 }
 
-body {
-    font-family: sans-serif;
-    margin: 20px;
-    padding: 0;
+.filter-container button {
+  background-color: cadetblue;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.square {
-    background: #fff;
-    border: 1px solid #999;
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 34px;
-}
-
-.board-row:after {
-    clear: both;
-    content: '';
-    display: table;
-}
-
-.status {
-    margin-bottom: 10px;
-}
-.game {
-    display: flex;
-    flex-direction: row;
-}
-
-.game-info {
-    margin-left: 20px;
+.filter-container button:hover {
+  background-color: #4fa8d3;
 }
