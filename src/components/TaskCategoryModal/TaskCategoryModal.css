@@ -1,0 +1,60 @@
+.overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: #2c2c2c;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    color: #e0e0e0;
+}
+
+.modal h2 {
+    margin-top: 0;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal label {
+    margin-bottom: 10px;
+}
+
+.modal input, .modal textarea {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.modal button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal button[type="submit"] {
+    background-color: #007acc;
+    color: white;
+}
+
+.modal button[type="button"] {
+    background-color: #cc0000;
+    color: white;
+}

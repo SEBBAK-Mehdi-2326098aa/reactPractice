@@ -1,46 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
 import todo from './to-do-list.json';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Todos from './components/Todos/Todos';
 import Filter from './components/Filter/Filter';
+import InitialModal from './components/InitialModal/InitialModal';
 
 export default function App() {
-    const [tasks, setTasks] = useState(todo.taches || []);
+    const [tasks, setTasks] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [relations, setRelations] = useState([]);
     const [filter, setFilter] = useState('all');
+    const [isInitialModalOpen, setIsInitialModalOpen] = useState(true);
 
-    const addTask = () => {
-        const newTask = {
+    useEffect(() => {
+        setTasks(Array.isArray(todo.taches) ? todo.taches : []);
+        setCategories(Array.isArray(todo.categories) ? todo.categories : []);
+        setRelations(Array.isArray(todo.relations) ? todo.relations : []);
+    }, []);
+
+    const addTask = (newTask) => {
+        const task = {
             id: tasks.length + 1,
-            title: 'Nouvelle tâche',
-            description: '',
+            title: newTask.title || 'Nouvelle tâche',
+            description: newTask.description || '',
             date_creation: new Date().toISOString().split('T')[0],
             date_echeance: '',
             done: false,
             urgent: false,
             contacts: []
         };
-        setTasks([...tasks, newTask]);
+        setTasks([...tasks, task]);
     };
 
     const updateTask = (updatedTask) => {
         setTasks(tasks.map(task => task.id === updatedTask.id ? updatedTask : task));
     };
 
-    const filteredTasks = tasks.filter(task => {
+    const deleteTask = (taskId) => {
+        setTasks(tasks.filter(task => task.id !== taskId));
+    };
+
+    const filteredTasks = Array.isArray(tasks) ? tasks.filter(task => {
         if (filter === 'completed') return task.done;
         if (filter === 'pending') return !task.done;
         if (filter === 'urgent') return task.urgent;
         return true;
-    });
+    }) : [];
+
+    const handleInitialChoice = (choice, data = {}) => {
+        if (choice === 'new') {
+            setTasks([]);
+            setCategories([]);
+            setRelations([]);
+        } else {
+            setTasks(Array.isArray(data.taches) ? data.taches : []);
+            setCategories(Array.isArray(data.categories) ? data.categories : []);
+            setRelations(Array.isArray(data.relations) ? data.relations : []);
+        }
+        setIsInitialModalOpen(false);
+    };
 
     return (
         <>
+            <InitialModal isOpen={isInitialModalOpen} onChoice={handleInitialChoice} />
             <Header taches={tasks} />
             <Filter setFilter={setFilter} />
-            <Todos taches={filteredTasks} updateTask={updateTask} />
-            <Footer addTask={addTask} />
+            <Todos taches={filteredTasks} updateTask={updateTask} deleteTask={deleteTask} />
+            <Footer addTask={addTask} tasks={tasks} categories={categories} relations={relations} />
         </>
     );
 }

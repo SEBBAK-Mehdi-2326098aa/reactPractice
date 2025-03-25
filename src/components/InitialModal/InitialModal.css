@@ -1,0 +1,44 @@
+.overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: #2c2c2c;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    color: #e0e0e0;
+}
+
+.modal h2 {
+    margin-top: 0;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007acc;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+    background-color: #005f99;
+}
