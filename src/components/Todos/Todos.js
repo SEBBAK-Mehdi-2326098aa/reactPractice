@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './Todos.css';
+import CategoryModal from "../CategoryModal/CategoryModal";
 
-export default function Todos({ taches, updateTask, deleteTask }) {
+export default function Todos({ taches, updateTask, deleteTask, categories = [], relations = [], addCategoryToTask }) {
     const [viewMode, setViewMode] = useState({});
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
     const handleTaskChange = (id, field, value) => {
         const updatedTask = taches.find(task => task.id === id);
@@ -25,6 +28,28 @@ export default function Todos({ taches, updateTask, deleteTask }) {
 
     const filteredTasks = taches.filter(task => !isTaskExpired(task.date_echeance));
 
+    const formatDate = (date) => {
+        const [day, month, year] = date.split('/');
+        const parsedDate = new Date(`${year}-${month}-${day}`);
+        return isNaN(parsedDate) ? '' : parsedDate.toISOString().split('T')[0];
+    };
+
+    const getCategories = (taskId) => {
+        return relations
+            .filter(rel => rel.tache === taskId)
+            .map(rel => categories.find(cat => cat.id === rel.categorie));
+    };
+
+    const handleAddCategory = (taskId) => {
+        setSelectedTask(taskId);
+        setIsCategoryModalOpen(true);
+    };
+
+    const addCategoryToTaskHandler = (categoryId) => {
+        addCategoryToTask(selectedTask, categoryId);
+        setIsCategoryModalOpen(false);
+    };
+
     return (
         <div className="todos-container">
             <ul>
@@ -39,26 +64,29 @@ export default function Todos({ taches, updateTask, deleteTask }) {
                             />
                             <input
                                 type="date"
-                                value={task.date_echeance}
+                                value={formatDate(task.date_echeance)}
                                 onChange={(e) => handleTaskChange(task.id, 'date_echeance', e.target.value)}
                             />
                             <button onClick={() => toggleViewMode(task.id)}>
                                 {viewMode[task.id] ? '▲' : '▼'}
                             </button>
                         </div>
-                        <div className="todo-categories">
-                            {(task.categories || []).slice(0, viewMode[task.id] ? (task.categories || []).length : 2).map((category, index) => (
-                                <span key={index} className="todo-category" onClick={() => console.log(`Filter by ${category}`)}>
-                                    {category}
-                                </span>
-                            ))}
-                        </div>
                         {viewMode[task.id] && (
-                            <textarea
-                                className="todo-description"
-                                value={task.description}
-                                onChange={(e) => handleTaskChange(task.id, 'description', e.target.value)}
-                            />
+                            <>
+                                <div className="todo-categories">
+                                    {getCategories(task.id).map((category, index) => (
+                                        <span key={index} className="todo-category" style={{ backgroundColor: category.color }}>
+                                            {category.title}
+                                        </span>
+                                    ))}
+                                </div>
+                                <textarea
+                                    className="todo-description"
+                                    value={task.description}
+                                    onChange={(e) => handleTaskChange(task.id, 'description', e.target.value)}
+                                />
+                                <button onClick={() => handleAddCategory(task.id)}>Ajouter une catégorie</button>
+                            </>
                         )}
                         <div className="todo-actions">
                             <label>
@@ -82,6 +110,14 @@ export default function Todos({ taches, updateTask, deleteTask }) {
                     </li>
                 ))}
             </ul>
+            {isCategoryModalOpen && (
+                <CategoryModal
+                    isOpen={isCategoryModalOpen}
+                    onRequestClose={() => setIsCategoryModalOpen(false)}
+                    addCategory={addCategoryToTaskHandler}
+                    categories={categories}
+                />
+            )}
         </div>
     );
 }

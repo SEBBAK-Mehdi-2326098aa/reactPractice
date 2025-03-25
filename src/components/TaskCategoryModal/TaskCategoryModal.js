@@ -16,7 +16,7 @@ export default function TaskCategoryModal({ isOpen, onRequestClose, addTask }) {
 
     return (
         <Modal isOpen={isOpen} onRequestClose={onRequestClose} className="modal" overlayClassName="overlay">
-            <h2>Create Task or Category</h2>
+            <h2>Créer une nouvelle tâche </h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Titre:

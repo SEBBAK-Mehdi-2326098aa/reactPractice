@@ -98,3 +98,29 @@
 .todo-actions button:hover {
     background-color: #990000;
 }
+
+.todo-category-badge {
+    margin-top: 10px;
+}
+
+.todo-category-badge span {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.todo-actions button, .todo-header button {
+    background-color: #007acc;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.todo-actions button:hover, .todo-header button:hover {
+    background-color: #005f99;
+}
