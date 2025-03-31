@@ -46,15 +46,21 @@ export default function App() {
     };
 
     const addCategory = (newCategory) => {
-        const category = {
-            id: categories.length + 1,
-            ...newCategory
-        };
-        setCategories([...categories, category]);
+        if (typeof newCategory === 'object') {
+            const category = {
+                id: categories.length + 1,
+                title: newCategory.title,
+                description: newCategory.description || '',
+                color: newCategory.color || '#007acc',
+                icon: ''
+            };
+            setCategories([...categories, category]);
+            return category.id;
+        }
+        return newCategory;
     };
 
 const addCategoryToTask = (taskId, categoryId) => {
-    // Add to task's categories array
     setTasks(tasks.map(task => {
         if (task.id === taskId) {
             const updatedCategories = [...(task.categories || [])];
@@ -66,7 +72,6 @@ const addCategoryToTask = (taskId, categoryId) => {
         return task;
     }));
 
-    // Add to relations array if not already there
     const relationExists = relations.some(rel =>
         rel.tache === taskId && rel.categorie === categoryId);
 
@@ -82,6 +87,7 @@ const addCategoryToTask = (taskId, categoryId) => {
         return true;
     }) : [];
 
+
     const handleInitialChoice = (choice, data = {}) => {
         if (choice === 'new') {
             setTasks([]);
@@ -94,16 +100,18 @@ const addCategoryToTask = (taskId, categoryId) => {
         }
         setIsInitialModalOpen(false);
     };
-
     return (
         <>
             <InitialModal isOpen={isInitialModalOpen} onChoice={handleInitialChoice} />
-            <Header taches={tasks} />
+            <Header
+                taches={tasks}
+                openCategoryModal={() => setIsCategoryModalOpen(true)}
+            />
             <Filter setFilter={setFilter} />
-            <Todos taches={filteredTasks} updateTask={updateTask} deleteTask={deleteTask} categories={categories} relations={relations} addCategoryToTask={addCategoryToTask} />
+            <Todos taches={filteredTasks} updateTask={updateTask} deleteTask={deleteTask} categories={categories} relations={relations}
+                   addCategoryToTask={addCategoryToTask} />
             <Footer addTask={addTask} tasks={tasks} categories={categories} relations={relations} />
-            <button onClick={() => setIsCategoryModalOpen(true)}>Gérer les catégories</button>
-            <CategoryModal isOpen={isCategoryModalOpen} onRequestClose={() => setIsCategoryModalOpen(false)} addCategory={addCategory} />
+            <CategoryModal isOpen={isCategoryModalOpen} onRequestClose={() => setIsCategoryModalOpen(false)} addCategory={addCategory} categories={categories} />
         </>
     );
 }

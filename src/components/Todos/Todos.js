@@ -37,7 +37,11 @@ export default function Todos({ taches, updateTask, deleteTask, categories = [],
     const getCategories = (taskId) => {
         return relations
             .filter(rel => rel.tache === taskId)
-            .map(rel => categories.find(cat => cat.id === rel.categorie));
+            .map(rel => {
+                const category = categories.find(cat => cat.id === rel.categorie);
+                return category || null;
+            })
+            .filter(Boolean);
     };
 
     const handleAddCategory = (taskId) => {
